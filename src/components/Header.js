@@ -8,12 +8,14 @@ const Header = () => {
     <div>
         <Link to="/" >Home</Link>
         <span> | </span>
-        <Link to="/login">Login</Link>
+        <Link to="/login" >Login</Link>
 
-        <p>Hello {name} </p>
+        {/* <p>Hello {name} </p> */}
       
     </div>
   )
 }
 
 export default Header
+
+

@@ -130,7 +130,7 @@ export default HomePage
 
 	import React from 'react'
 
-function loginPage() {
+function LoginPage() {
   return (
     <div>
       
@@ -138,13 +138,13 @@ function loginPage() {
   )
 }
 
-export default loginPage
+export default LoginPage
 
 36. Add in the code next changes:
  
 	import React from 'react'
 
-function loginPage() {
+function LoginPage() {
   return (
     <div>
         <form>
@@ -157,7 +157,7 @@ function loginPage() {
   )
 }
 
-export default loginPage
+export default LoginPage
 
 37. Go into the way src -> utils -> App.js and make the changes:
 
@@ -326,9 +326,103 @@ export const AuthProvider = ({children}) => {
 74. Write after 'import { Link } from 'react-router-dom'
 
 	import AuthContext from '../context/AuthContext'
-75. 
+75. Go into src -> components -> Header.js
+76. Comment '<p>Hello {name} </p>'
+
+	{/* <p>Hello {name} </p> */}
+
+77. Go into src -> context -> AuthContext.js    and make the changes: 
+
+import { createContext, useState, useEffect } from 'react'
+
+const AuthContext = createContext()
+
+export default AuthContext;
+
+export const AuthProvider = ({children}) => {
+    /* Tokens */
+    let [authTokens, setAuthTokens] = useState(null)
+    let [user, setUser] = useState(null)
+
+    /* Login */
+    let loginUser = async (e )=> {
+        e.preventDefault()
+        console.log('Form submitted')
+        // let responce = fetch('http://127.0.0.1:8000/api/token/', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type':'application/json'
+        //     },
+        //     body:JSON.stringify({'username':null, 'password':null})
+        // })
+
+    }
+
+    let contexData = {
+        loginUser:loginUser
+    }
+    return(
+        <AuthContext.Provider value={{contexData}} >
+            {children}
+        </AuthContext.Provider>
+    )
+}
+
+78.  Go into src -> pages -> LoginPage.js and make the changes:
+
+import React, {useContext} from 'react'
+import AuthContext from '../context/AuthContext'
+
+const LoginPage = () => {
+  let {loginUser} =useContext(AuthContext)
+  return (
+    <div>
+        <form onSubmit={loginUser}>
+            <input type="text" name="username" placeholder="Enter Username" />
+            <input type="password" name="password" placeholder="Enter Password" />
+            <input type="submit" />
+        </form>
+      
+    </div>
+  )
+}
+
+export default LoginPage
+
+
+79. Chesk react APP (on click submit)
+80. Go into src -> AuthContext.js
+81. uncomment the next code:
+
+	 let responce = fetch('http://127.0.0.1:8000/api/token/', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({'username':null, 'password':null})
+        })
+
+82. Remove  console.log('Form submitted')
+83. Make the changes in:
+
+	 },
+            body:JSON.stringify({'username':e.target.username.value, 'password':e.target.password.value})
+        })
+
+84. Go into (environment) PS C:\Users\HP\Desktop\backend> and write       python manage.py createsuperuser    
+85. In PS C:\Users\HP\Desktop\frontend> npm start
+86. Go into 'Rect APP' http://localhost:3000/login
+87. Enter in the form 'login' and 'Password' for superuser
+88. Click right button of mouse on the field. Check 'Inspect'
+89. Your will see 'data: {refresh: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90e…hwIn0.6ZeAaqddloa6OxJ8VW9Ee4-Z2DZQ_bjeij0n7BA77Gc', 
+access: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90e…HAifQ.xH_XTx0TqJIQU31NumgIa1lZ1c__SOVKVsy-DvnLEEw'}'
+
+
+
+
 
 	
+
 	
 
 
